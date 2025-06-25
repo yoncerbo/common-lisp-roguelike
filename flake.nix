@@ -15,10 +15,15 @@
     devShell."${system}" = pkgs.mkShell rec {
       packages = with pkgs; [
         rlwrap
-        sbcl.withPackages (ps: with ps; [
-          quickproject
-        ])
+        sbcl
+        lispPackages.quicklisp
+        ncurses
+        libtcod
+        # sbclPackages.tcod
+        sbclPackages.cffi-libffi
+        libffi
       ];
+      LD_LIBRARY_PATH = "${nixpkgs.lib.makeLibraryPath packages}";
     };
   };
 }
